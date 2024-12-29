@@ -1,57 +1,53 @@
 
+using Shooter2D.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Shooter2D
+namespace Shooter2D.Player
 {
     public class PlayerView : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private float speed = 5f;
         [SerializeField] private Animator animator;
-        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private Animator footAnimator;
 
-        private PlayerInputAction playerInput;
-        Vector2 moveDirection = Vector2.zero;
-        private InputAction move;
-        private InputAction fire;
 
+        public PlayerController Controller;
         private void Awake()
         {
-            playerInput = new PlayerInputAction();
+          
         }
        private void OnEnable()
         {
-            playerInput.Enable();
+           
         }
 
         private void OnDisable()
         {
-            playerInput.Disable();
+           
         }
 
         private void Start()
         {
-            move = playerInput.Player.Move;
-            fire = playerInput.Player.Fire;
+           
         }
 
         private void Update()
         {
-            moveDirection = move.ReadValue<Vector2>();
-            SetAnimation();
-            if (fire.triggered)
-            {
-                Debug.Log("Fire");
-            }
+            Controller.Update();
+            SetAnimation(Controller.MoveDirection);
+           
         }
-        private void SetAnimation()
+        private void SetAnimation(Vector2 moveDirection)
         {
             if (moveDirection != Vector2.zero)
             {
                 animator.SetFloat("XInput", moveDirection.x);
                 animator.SetFloat("YInput", moveDirection.y);
-                //spriteRenderer.flipX = moveDirection.x < 0;
+
+                footAnimator.SetFloat("XInput", moveDirection.x);
+                footAnimator.SetFloat("YInput", moveDirection.y);
             }
             else
             {
@@ -60,7 +56,7 @@ namespace Shooter2D
         }
         private void FixedUpdate()
         {
-            rb.velocity = moveDirection * speed;
+            rb.velocity = Controller.MoveDirection * speed;
         }
     }
 }
