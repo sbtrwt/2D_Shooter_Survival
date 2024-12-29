@@ -9,11 +9,13 @@ namespace Shooter2D.Weapon.Bullet
         private BulletView bulletView;
         private BulletSO bulletSO;
         private Vector2 bulletDirection;
-        public BulletController( BulletView bulletView, Transform bulletContainer, BulletSO bulletSO)
+        private IObjectPoolHandler<BulletController> objectPoolHandler;
+        public BulletController( BulletView bulletView, Transform bulletContainer, BulletSO bulletSO, IObjectPoolHandler<BulletController> objectPoolHandler)
         {
             this.bulletView = GameObject.Instantiate(bulletView, bulletContainer);
             this.bulletSO = bulletSO;
             this.bulletView.Controller = this;
+            this.objectPoolHandler = objectPoolHandler;
         }
         public void ConfigureBullet(Vector2 position, Vector2 direction)
         {
@@ -24,7 +26,10 @@ namespace Shooter2D.Weapon.Bullet
         }
         public void UpdateBulletMotion()
         {
+            Debug.Log("bulletSO.Speed: " + bulletSO.Speed);
+            Debug.Log("bulletDirection: " + bulletDirection);
             bulletView.transform.Translate( Time.deltaTime * bulletSO.Speed * bulletDirection);
+            CheckBulletOutOfScreen();
         }
         public void OnBulletEnteredTrigger(GameObject collidedGameObject)
         {
@@ -34,7 +39,16 @@ namespace Shooter2D.Weapon.Bullet
                 //GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.BulletHit);
                 //GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.BulletHitExplosion, bulletView.transform.position);
                 bulletView.gameObject.SetActive(false);
-                //GameService.Instance.GetPlayerService().ReturnBulletToPool(this);
+                objectPoolHandler.ReturnItem(this);
+            }
+        }
+        //check out of screen
+        public void CheckBulletOutOfScreen()
+        {
+            if (bulletView.transform.position.x > 3 || bulletView.transform.position.x < -3 || bulletView.transform.position.y > 3 || bulletView.transform.position.y < -3)
+            {
+                bulletView.gameObject.SetActive(false);
+                objectPoolHandler.ReturnItem(this);
             }
         }
     }

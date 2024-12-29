@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2138430568516166810}
   - component: {fileID: 7144658357297821831}
   - component: {fileID: 4565961497455442441}
+  - component: {fileID: -6964225955790972312}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -261,6 +262,20 @@ MonoBehaviour:
   speed: 1
   animator: {fileID: 3673173927694345796}
   footAnimator: {fileID: 6763738740003707867}
+  gunPoint: {fileID: 7448161363058897537}
+--- !u!114 &-6964225955790972312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2964825281764465413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b6091343733df4f93ff51cf28ceb57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wrappingOffset: 0.05
 --- !u!1 &4182480883388587803
 GameObject:
   m_ObjectHideFlags: 0

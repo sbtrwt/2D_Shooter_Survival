@@ -1,4 +1,5 @@
-﻿using Shooter2D.Utilities;
+﻿using Shooter2D.Interfaces;
+using Shooter2D.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +14,17 @@ namespace Shooter2D.Weapon.Bullet
         private BulletView bulletView;
         private Transform bulletContainer;
         private BulletSO bulletSO;
-        public BulletPool(BulletView bulletView, BulletSO bulletSO)
+        private IObjectPoolHandler<BulletController> objectPoolHandler;
+        public BulletPool(BulletView bulletView, BulletSO bulletSO, IObjectPoolHandler<BulletController> objectPoolHandler)
         {
             this.bulletView = bulletView;
 
             this.bulletContainer = new GameObject("Bullet Container").transform;
             this.bulletSO = bulletSO;
+            this.objectPoolHandler = objectPoolHandler;
         }
 
-        protected override BulletController CreateItem() => new BulletController(bulletView, bulletContainer,bulletSO);
+        protected override BulletController CreateItem() => new BulletController(bulletView, bulletContainer,bulletSO, objectPoolHandler);
         public BulletController GetBullet()
         {
             BulletController bullet = GetItem();

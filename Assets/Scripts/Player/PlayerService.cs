@@ -1,9 +1,10 @@
-﻿using Shooter2D.Weapon.Bullet;
+﻿using Shooter2D.Interfaces;
+using Shooter2D.Weapon.Bullet;
 using UnityEngine;
 
 namespace Shooter2D.Player
 {
-    public class PlayerService
+    public class PlayerService: IObjectPoolHandler<BulletController>
     {
         private PlayerSO playerSO;
         private PlayerController playerController;
@@ -11,7 +12,7 @@ namespace Shooter2D.Player
         public PlayerService(PlayerSO playerSO, BulletSO bulletSO)
         {
             this.playerSO = playerSO;
-            bulletPool = new BulletPool(bulletSO.BulletView, bulletSO);
+            bulletPool = new BulletPool(bulletSO.BulletView, bulletSO, this);
             playerController = new PlayerController(playerSO.playerView, bulletPool);
             playerController.Init();
         }
@@ -19,6 +20,8 @@ namespace Shooter2D.Player
 
         public Vector3 GetPlayerPosition() => playerController.GetPlayerPosition();
 
-        public void ReturnBulletToPool(BulletController bulletToReturn) => bulletPool.ReturnItem(bulletToReturn);
+
+        public void ReturnItem(BulletController item) => bulletPool.ReturnItem(item);
+       
     }
 }

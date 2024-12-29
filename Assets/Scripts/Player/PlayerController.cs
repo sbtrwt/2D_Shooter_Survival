@@ -39,7 +39,7 @@ namespace Shooter2D.Player
         public void Update()
         {
             moveDirection = move.ReadValue<Vector2>();
-            if (moveDirection != Vector2.zero)
+            if (currentDirection != moveDirection && moveDirection != Vector2.zero)
             {
                 currentDirection = moveDirection;
             }
@@ -57,8 +57,8 @@ namespace Shooter2D.Player
         public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;
         public void FireWeapon()
         {
-            BulletController bullet = bulletPool.GetBullet();
-            FireBulletAtPosition(playerView.transform.position, currentDirection);
+            Vector2 position = playerView.GunPoint.position;
+            FireBulletAtPosition(position, currentDirection);
         }
         void StartFiring(InputAction.CallbackContext context)
         {
@@ -72,10 +72,11 @@ namespace Shooter2D.Player
             Debug.Log("Firing stopped!");
             // Add logic for stopping an attack or reloading
         }
-        private void FireBulletAtPosition(Vector3 fireLocation, Vector2 moveDirection)
+        private void FireBulletAtPosition(Vector3 fireLocation, Vector2 direction)
         {
             BulletController bulletToFire = bulletPool.GetBullet();
-            bulletToFire.ConfigureBullet(fireLocation, moveDirection);
+            Debug.Log(direction);
+            bulletToFire.ConfigureBullet(fireLocation, direction);
            
         }
         ~PlayerController()
