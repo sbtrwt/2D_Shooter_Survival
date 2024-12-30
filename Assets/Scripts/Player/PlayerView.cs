@@ -15,24 +15,7 @@ namespace Shooter2D.Player
 
         public PlayerController Controller;
         public Transform GunPoint => gunPoint;
-        private void Awake()
-        {
-          
-        }
-       private void OnEnable()
-        {
-           
-        }
-
-        private void OnDisable()
-        {
-           
-        }
-
-        private void Start()
-        {
-           
-        }
+       
 
         private void Update()
         {

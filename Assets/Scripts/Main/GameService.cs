@@ -1,4 +1,5 @@
 using Shooter2D.Player;
+using Shooter2D.Weapon;
 using Shooter2D.Weapon.Bullet;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Shooter2D
     {
         #region Services
         private PlayerService playerService;
-
+        private WeaponService weaponService;
         //private EnemyService enemyService;
         #endregion
 
@@ -31,12 +32,13 @@ namespace Shooter2D
         {
            
             playerService = new PlayerService(playerSO, bulletSO);
-           
+            weaponService = new WeaponService(bulletSO);
+            //enemyService = new EnemyService(enemySO);
         }
 
         private void InjectDependencies()
         {
-            //playerService.Init();
+            playerService.Init(weaponService);
         }
     }
 }

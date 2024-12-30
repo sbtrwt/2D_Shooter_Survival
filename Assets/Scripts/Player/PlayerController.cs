@@ -43,16 +43,7 @@ namespace Shooter2D.Player
             {
                 currentDirection = moveDirection;
             }
-            //if(fire.IsPressed())
-            //{
-            //    Debug.Log("Fire");  
-            //    FireWeapon();
-            //}
-            //if (fire)
-            //{
-            //    Debug.Log("Fire");
-            //    FireWeapon();
-            //}
+            
         }
         public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;
         public void FireWeapon()

@@ -6,6 +6,9 @@ namespace Shooter2D.Weapon
 {
     public class WeaponView : MonoBehaviour
     {
+        [SerializeField] private Transform gunPoint;
+
         public WeaponController Controller;
+        public Transform GunPoint => gunPoint;
     }
 }
