@@ -2,23 +2,46 @@
 using Shooter2D.Weapon.Bullet;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Shooter2D.Weapon
 {
-    public class WeaponService: IObjectPoolHandler<BulletController>
+    public class WeaponService
     {
-        private BulletPool bulletPool;
-        private WeaponController weaponController;
-        public WeaponService( BulletSO bulletSO)
-        {
-           bulletPool = new BulletPool(bulletSO.BulletView, bulletSO, this);
-        }
-        public void ReturnBulletToPool(BulletController bulletToReturn) => bulletPool.ReturnItem(bulletToReturn);
+        private List<WeaponController> weapons = new List<WeaponController>();
 
-        public void ReturnItem(BulletController item) => bulletPool.ReturnItem(item);
-        
+        private BulletService bulletService;
+        private WeaponSO weaponSO;
+        private Transform weaponContainer;
+        public WeaponService(WeaponSO weaponSO, Transform container)
+        {
+            this.weaponSO = weaponSO;
+            this.weaponContainer = container;
+           
+        }
+        public void Init(BulletService bulletService)
+        {
+            this.bulletService = bulletService;
+            CreateWeapon(weaponSO, weaponContainer);
+        }
+        public WeaponController CreateWeapon(WeaponSO weaponSO, Transform container)
+        {
+            this.weaponSO = weaponSO;
+            WeaponController weaponController = new WeaponController(weaponSO.WeaponView, container);
+            weaponController.Init(bulletService);
+            weapons.Add(weaponController);
+            return weaponController;
+        }
+        public List<WeaponController> GetWeapons()
+        {
+            return weapons;
+        }
+
+
+
     }
 }

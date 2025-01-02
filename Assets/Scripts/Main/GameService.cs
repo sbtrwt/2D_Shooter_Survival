@@ -15,13 +15,20 @@ namespace Shooter2D
         #region Services
         private PlayerService playerService;
         private WeaponService weaponService;
+        private BulletService bulletService;
         //private EnemyService enemyService;
         #endregion
 
         #region ScriptableObjects
         [SerializeField] private PlayerSO playerSO;
         [SerializeField] private BulletSO bulletSO;
+        [SerializeField] private WeaponSO weaponSO;
         #endregion
+
+        #region GameObjects
+        [SerializeField] private Transform weaponContainer;
+        #endregion
+
         private void Start()
         {
             InitializeServices();
@@ -31,14 +38,17 @@ namespace Shooter2D
         private void InitializeServices()
         {
            
-            playerService = new PlayerService(playerSO, bulletSO);
-            weaponService = new WeaponService(bulletSO);
+            playerService = new PlayerService(playerSO);
+            weaponService = new WeaponService(weaponSO, weaponContainer);
+            bulletService = new BulletService(bulletSO);
             //enemyService = new EnemyService(enemySO);
         }
 
         private void InjectDependencies()
         {
+            weaponService.Init(bulletService);
             playerService.Init(weaponService);
+
         }
     }
 }
