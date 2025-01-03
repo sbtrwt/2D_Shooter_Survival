@@ -48,6 +48,7 @@ namespace Shooter2D.Player
             if (currentDirection != moveDirection && moveDirection != Vector2.zero)
             {
                 currentDirection = moveDirection;
+                playerService.GetActiveWeapon().Rotate(currentDirection);
             }
             
         }

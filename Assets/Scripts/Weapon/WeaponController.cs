@@ -41,9 +41,33 @@ namespace Shooter2D.Weapon
 
         public void Rotate(Vector2 direction)
         {
-            weaponView.transform.transform.right = direction;
+            // Ensure the direction vector has a magnitude > 0 to avoid errors
+            if (direction.sqrMagnitude > 0)
+            {
+                // Calculate the angle in degrees
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                // Apply the angle to the weapon's rotation
+                float xDeg = 0, yDeg = 0;
+               
+                if(direction.x < 0 )
+                {
+                    xDeg = 180;
+                }
+                if (direction.y < 0)
+                {
+                    yDeg = 180;
+                }
+                weaponView.transform.rotation = Quaternion.Euler(xDeg, yDeg, angle);
+
+
+            }
         }
 
+        public void Flip()
+        {
+           
+        }
         public void Fire(System.Numerics.Vector2 direction)
         {
             throw new NotImplementedException();
@@ -52,5 +76,6 @@ namespace Shooter2D.Weapon
         {
             weaponView.transform.parent = parent;
         }
+       
     }
 }
