@@ -17,7 +17,7 @@ MonoBehaviour:
   minimumSpawnRate: 3
   difficultyDelta: 1
   enemyData:
-    maxHealth: 10
+    maxHealth: 1
     minimumSpeed: 1
     maximumSpeed: 2
     damageToInflict: 1
