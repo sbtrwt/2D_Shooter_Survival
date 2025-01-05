@@ -110,7 +110,7 @@ namespace Shooter2D.Enemy
             //GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.EnemyDeath);
             //GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.EnemyExplosion, enemyView.transform.position);
             enemyView.gameObject.SetActive(false);
-            enemyService.ReturnEnemyToPool(this);
+            enemyService.ReturnItem(this);
         }
 
         private enum EnemyState

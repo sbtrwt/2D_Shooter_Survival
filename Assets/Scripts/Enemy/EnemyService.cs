@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Shooter2D.Interfaces;
+using Shooter2D.Weapon.Bullet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +9,7 @@ using UnityEngine;
 
 namespace Shooter2D.Enemy
 {
-    public class EnemyService
+    public class EnemyService : IObjectPoolHandler<EnemyController>
     {
         #region Dependencies
         private EnemySO enemyScriptableObject;
@@ -112,7 +114,10 @@ namespace Shooter2D.Enemy
 
         public void SetEnemySpawning(bool setActive) => isSpawning = setActive;
 
-        public void ReturnEnemyToPool(EnemyController enemyToReturn) => enemyPool.ReturnItem(enemyToReturn);
+       
+
+        public void ReturnItem(EnemyController item) => enemyPool.ReturnItem(item);
+        
     }
     public enum EnemyOrientation
     {

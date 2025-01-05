@@ -50,14 +50,14 @@ namespace Shooter2D.Weapon
                 // Apply the angle to the weapon's rotation
                 float xDeg = 0, yDeg = 0;
                
-                if(direction.x < 0 )
-                {
-                    xDeg = 180;
-                }
-                if (direction.y < 0)
-                {
-                    yDeg = 180;
-                }
+                //if(direction.x < 0 )
+                //{
+                //    xDeg = 180;
+                //}
+                //if (direction.y < 0)
+                //{
+                //    yDeg = 180;
+                //}
                 weaponView.transform.rotation = Quaternion.Euler(xDeg, yDeg, angle);
 
 
