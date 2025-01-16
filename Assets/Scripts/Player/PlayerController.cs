@@ -1,4 +1,5 @@
-﻿using Shooter2D.Weapon.Bullet;
+﻿using Shooter2D.Weapon;
+using Shooter2D.Weapon.Bullet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +16,31 @@ namespace Shooter2D.Player
         private PlayerInputAction playerInput;
         Vector2 moveDirection = Vector2.zero;
         Vector2 currentDirection = Vector2.right;
+
         private InputAction move;
         private InputAction fire;
+        private InputAction switchWeapon;
+
         private float speed = 1f;
-        private BulletPool bulletPool;
+        private PlayerService playerService;
         public Vector2 MoveDirection => moveDirection;
-        public PlayerController(PlayerView playerView, BulletPool bulletPool)
+        public PlayerController(PlayerView playerView, PlayerService playerService)
         {
             this.playerView = GameObject.Instantiate(playerView);
             this.playerView.Controller = this;
+            this.playerService = playerService;
+
             playerInput = new PlayerInputAction();
             playerInput.Enable();
-            this.bulletPool = bulletPool;
         }
         public void Init()
         {
-
             move = playerInput.Player.Move;
             fire = playerInput.Player.Fire;
-            fire.performed += ctx => StartFiring(ctx);
-            fire.canceled += ctx => StopFiring(ctx);
+            //switchWeapon = playerInput.Player.SwitchWeapon;
+
+            fire.performed += ctx => FireWeapon();
+            //switchWeapon.performed += ctx => playerService.SwitchWeapon();
         }
         public void Update()
         {
@@ -42,43 +48,21 @@ namespace Shooter2D.Player
             if (currentDirection != moveDirection && moveDirection != Vector2.zero)
             {
                 currentDirection = moveDirection;
+                playerService.GetActiveWeapon().Rotate(currentDirection);
             }
-            //if(fire.IsPressed())
-            //{
-            //    Debug.Log("Fire");  
-            //    FireWeapon();
-            //}
-            //if (fire)
-            //{
-            //    Debug.Log("Fire");
-            //    FireWeapon();
-            //}
+            
         }
         public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;
+       
         public void FireWeapon()
         {
-            Vector2 position = playerView.GunPoint.position;
-            FireBulletAtPosition(position, currentDirection);
+            WeaponController activeWeapon = playerService.GetActiveWeapon();
+            if (activeWeapon != null)
+            {
+                activeWeapon.Fire(currentDirection);
+            }
         }
-        void StartFiring(InputAction.CallbackContext context)
-        {
-            Debug.Log("Firing started!");
-            FireWeapon();
-            // Add logic for continuous firing or initiating an attack
-        }
-
-        void StopFiring(InputAction.CallbackContext context)
-        {
-            Debug.Log("Firing stopped!");
-            // Add logic for stopping an attack or reloading
-        }
-        private void FireBulletAtPosition(Vector3 fireLocation, Vector2 direction)
-        {
-            BulletController bulletToFire = bulletPool.GetBullet();
-            Debug.Log(direction);
-            bulletToFire.ConfigureBullet(fireLocation, direction);
-           
-        }
+        public Transform GetGunHolder() => playerView.GunHolder;
         ~PlayerController()
         {
             playerInput.Disable();

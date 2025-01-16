@@ -11,28 +11,11 @@ namespace Shooter2D.Player
         [SerializeField] private float speed = 5f;
         [SerializeField] private Animator animator;
         [SerializeField] private Animator footAnimator;
-        [SerializeField] private Transform gunPoint;
+        [SerializeField] private Transform gunHolder;
 
         public PlayerController Controller;
-        public Transform GunPoint => gunPoint;
-        private void Awake()
-        {
-          
-        }
-       private void OnEnable()
-        {
-           
-        }
-
-        private void OnDisable()
-        {
-           
-        }
-
-        private void Start()
-        {
-           
-        }
+        public Transform GunHolder => gunHolder;
+       
 
         private void Update()
         {
