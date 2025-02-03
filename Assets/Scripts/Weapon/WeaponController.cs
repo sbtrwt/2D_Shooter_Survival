@@ -55,14 +55,7 @@ namespace Shooter2D.Weapon
                 // Apply the angle to the weapon's rotation
                 float xDeg = 0, yDeg = 0;
                
-                //if(direction.x < 0 )
-                //{
-                //    xDeg = 180;
-                //}
-                //if (direction.y < 0)
-                //{
-                //    yDeg = 180;
-                //}
+               
                 weaponView.transform.rotation = Quaternion.Euler(xDeg, yDeg, angle);
 
 
@@ -77,7 +70,7 @@ namespace Shooter2D.Weapon
         {
             throw new NotImplementedException();
         }
-        public override void Use()
+        public override void Use(Transform target)
         {
             // Implement the Use method here
             throw new NotImplementedException();

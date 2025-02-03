@@ -11,8 +11,8 @@ namespace Shooter2D.Weapon
         public WeaponType WeaponType;
         public float Range;
         public WeaponView Prefab;
-        public Sprite icon;
-
+        public Sprite Icon;
+        public WeaponAttackStrategy WeaponAttackStrategy;
 
     }
 

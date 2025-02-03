@@ -21,7 +21,7 @@ namespace Shooter2D.Weapon
             Debug.Log("Unequipping weapon: " + weaponConfig.WeaponName);
         }
 
-        public abstract void Use();
+        public abstract void Use(Transform target);
         
     }
     
