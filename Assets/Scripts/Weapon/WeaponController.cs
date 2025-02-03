@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Shooter2D.Weapon
 {
-    public class WeaponController : IFireable
+    public class WeaponController : WeaponBase, IFireable
     {
         private WeaponView weaponView;
         private BulletPool bulletPool;
@@ -22,6 +22,11 @@ namespace Shooter2D.Weapon
         {
             this.weaponView = GameObject.Instantiate(weaponView, container);
 
+        }
+        public  WeaponController(WeaponConfig weaponConfig)
+        {
+            this.weaponView = GameObject.Instantiate(weaponConfig.Prefab);
+            Initialize(weaponConfig);
         }
         public void Init(BulletService bulletService)
         {
@@ -72,10 +77,20 @@ namespace Shooter2D.Weapon
         {
             throw new NotImplementedException();
         }
+        public override void Use()
+        {
+            // Implement the Use method here
+            throw new NotImplementedException();
+        }
+
         public void SetParent(Transform parent)
         {
             weaponView.transform.parent = parent;
         }
        
+       public void Destroy()
+        {
+            GameObject.Destroy(weaponView.gameObject);
+        }
     }
 }

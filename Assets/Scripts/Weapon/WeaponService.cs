@@ -13,15 +13,17 @@ namespace Shooter2D.Weapon
     public class WeaponService
     {
         private List<WeaponController> weapons = new List<WeaponController>();
-
+        private WeaponController currentWeapon;
+        private WeaponFactory weaponFactory;
         private BulletService bulletService;
         private WeaponSO weaponSO;
         private Transform weaponContainer;
+        public Transform MountPoint { get; private set; }   
         public WeaponService(WeaponSO weaponSO, Transform container)
         {
             this.weaponSO = weaponSO;
             this.weaponContainer = container;
-           
+
         }
         public void Init(BulletService bulletService)
         {
@@ -40,7 +42,15 @@ namespace Shooter2D.Weapon
         {
             return weapons;
         }
-
+        public void EquipWeapon(WeaponConfig config)
+        {
+            if(currentWeapon != null){
+                //Destroy
+                currentWeapon.Destroy();
+            }
+            currentWeapon = weaponFactory.CreateWeapon(config);
+            currentWeapon.SetParent(MountPoint);
+        }
 
 
     }
